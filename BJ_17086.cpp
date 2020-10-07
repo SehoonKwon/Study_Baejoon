@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <cstring>
+#include <vector>
 using namespace std;
 
 #define INF (int)1e9
