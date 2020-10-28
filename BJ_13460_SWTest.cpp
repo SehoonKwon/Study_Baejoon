@@ -1,170 +1,167 @@
-//#include <iostream>
-//#include <cstring>
-//#include <queue>
-//using namespace std;
-//
-////±¸½½ 1°³¸¸ ÇÏ´Â°Å¸é ½±°Ô Â¥°Ú´Âµ¥ 2°³¸¦ µ¿½Ã¿¡ ¿òÁ÷ÀÌ¸é¼­ ¸ğµÎ µé¾î°¡´Â °æ¿ì ¿¹¿ÜÃ³¸® ÇÏ´Â ºÎºĞÀÌ ³­ÀÌµµ ¾ö~~~~Ã» ³ôÀÓ. 
-//
-//int N, M;
-//int rx, ry, bx, by;
-//char Array[11][11];
-//int visit[11][11][11][11];
-//int dx[] = { 0,0,-1,1 };
-//int dy[] = { -1,1,0,0 };
-//
-//struct point
-//{
-//	int x;
-//	int y;
-//	int bx;
-//	int by;
-//	int step;
-//};
-//
-//queue<point> q;
-//
-//int BFS()
-//{
-//	visit[ry][rx][by][bx] = true;
-//	q.push({ rx,ry,bx,by,0 });
-//
-//
-//	while (!q.empty())
-//	{
-//		int X = q.front().x;
-//		int Y = q.front().y;
-//		int BX = q.front().bx;
-//		int BY = q.front().by;
-//		int step = q.front().step;
-//		int Bstep = step;
-//		q.pop();
-//
-//		if (step >= 10)
-//		{
-//			while (!q.empty()) q.pop();
-//			return -1;
-//		}
-//
-//		for (int i = 0; i < 4; i++)
-//		{
-//			int nx = X + dx[i];
-//			int ny = Y + dy[i];
-//			int nbx = BX + dx[i];
-//			int nby = BY + dy[i];
-//
-//			int goal = 0;
-//			int goal_b = 0;
-//			//»¡°£ °ø ÀÌµ¿
-//			while (Array[ny][nx] != '#' && (nx > -1 && nx<M && ny > -1 && ny < N))
-//			{
-//				if (Array[ny][nx] == 'O')
-//				{
-//					goal = 1;
-//					break;
-//				}
-//
-//				nx += dx[i];
-//				ny += dy[i];
-//			}
-//
-//			//ÆÄ¶õ °ø ÀÌµ¿
-//			while (Array[nby][nbx] != '#' && (nbx >-1 && nbx < M && nby > -1 && nby <N))
-//			{
-//				if (Array[nby][nbx] == 'O')
-//				{
-//					goal_b = 1;
-//					break;
-//				}
-//
-//				nbx += dx[i];
-//				nby += dy[i];
-//			}
-//
-//			nx -= dx[i];
-//			ny -= dy[i];
-//			nbx -= dx[i];
-//			nby -= dy[i];
-//
-//			if (goal_b == 1 && goal != 1) continue;
-//
-//			if (goal == 1)
-//			{
-//				if (goal_b == 1)
-//					continue;
-//
-//				else
-//				{
-//					while (!q.empty()) q.pop();
-//					return step+1;
-//				}
-//			}
-//
-//			//°æ¿ì 1 - À­¹æÇâ + ÀÏÁ÷¼± »ó¿¡ ÀÖ´Â°æ¿ì
-//			if (i == 0 && (nx == nbx && ny == nby))
-//			{
-//				if (Y < BY) nby++; //»¡°£ °øÀÌ ÆÄ¶õ °ø À§ÀÇ °æ¿ì
-//				if (Y > BY) ny++; // »¡°£ °øÀÌ ÆÄ¶õ °ø ¾Æ·¡ÀÎ °æ¿ì
-//			}
-//
-//			//°æ¿ì 2 - ¾Æ·§¹æÇâ + ÀÏÁ÷¼± »ó
-//			if (i == 1 && (nx == nbx && ny == nby))
-//			{
-//				if (Y < BY) ny--;
-//				if (Y > BY) nby--;
-//			}
-//
-//			//°æ¿ì 3 - ¿ŞÂÊ ¹æÇâ + ÀÏÁ÷¼±
-//			if (i == 2 && (nx == nbx && ny == nby))
-//			{
-//				if (X < BX) nbx++;
-//				if (X > BX) nx++;
-//			}
-//
-//			//°æ¿ì 4 - ¿À¸¥ÂÊ ¹æÇâ + ÀÏÁ÷¼±
-//			if (i == 3 && (nx == nbx && ny == nby))
-//			{
-//				if (X < BX) nx--;
-//				if (X > BX) nbx--;
-//			}
-//
-//			//			if ((nx == X && ny == Y) || (nbx==BX && nby==BY)) continue;
-//			if (visit[ny][nx][nby][nbx] == 0)
-//			{
-//				visit[ny][nx][nby][nbx] = true;
-//				q.push({ nx,ny,nbx,nby,step + 1 });
-//			}
-//		}
-//	}
-//
-//	return -1;
-//}
-//
-//int main()
-//{
-//	memset(visit, 0, sizeof(visit));
-//
-//	cin >> N >> M;
-//
-//	for(int i=0; i<N; i++)
-//		for (int j = 0; j < M; j++)
-//		{
-//			cin >> Array[i][j];
-//			if (Array[i][j] == 'R')
-//			{
-//				rx = j;
-//				ry = i;
-//			}
-//
-//			if (Array[i][j] == 'B')
-//			{
-//				bx = j;
-//				by = i;
-//			}
-//		}
-//
-//	int ans = BFS();
-//
-//	cout << ans;
-//
-//	return 0;
-//}
+#include <iostream>
+#include <cstring>
+#include <queue>
+using namespace std;
+
+int N, M;
+int rx, ry, bx, by;
+char Array[11][11];
+int visit[11][11][11][11];
+int dx[] = { 0,0,-1,1 };
+int dy[] = { -1,1,0,0 };
+
+struct point
+{
+	int x;
+	int y;
+	int bx;
+	int by;
+	int step;
+};
+
+queue<point> q;
+
+int BFS()
+{
+	visit[ry][rx][by][bx] = true;
+	q.push({ rx,ry,bx,by,0 });
+
+
+	while (!q.empty())
+	{
+		int X = q.front().x;
+		int Y = q.front().y;
+		int BX = q.front().bx;
+		int BY = q.front().by;
+		int step = q.front().step;
+		int Bstep = step;
+		q.pop();
+
+		if (step >= 10)
+		{
+			while (!q.empty()) q.pop();
+			return -1;
+		}
+
+		for (int i = 0; i < 4; i++)
+		{
+			int nx = X + dx[i];
+			int ny = Y + dy[i];
+			int nbx = BX + dx[i];
+			int nby = BY + dy[i];
+
+			int goal = 0;
+			int goal_b = 0;
+			//ë¹¨ê°„ ê³µ ì´ë™
+			while (Array[ny][nx] != '#' && (nx > -1 && nx<M && ny > -1 && ny < N))
+			{
+				if (Array[ny][nx] == 'O')
+				{
+					goal = 1;
+					break;
+				}
+
+				nx += dx[i];
+				ny += dy[i];
+			}
+
+			//íŒŒë€ ê³µ ì´ë™
+			while (Array[nby][nbx] != '#' && (nbx >-1 && nbx < M && nby > -1 && nby <N))
+			{
+				if (Array[nby][nbx] == 'O')
+				{
+					goal_b = 1;
+					break;
+				}
+
+				nbx += dx[i];
+				nby += dy[i];
+			}
+
+			nx -= dx[i];
+			ny -= dy[i];
+			nbx -= dx[i];
+			nby -= dy[i];
+
+			if (goal_b == 1 && goal != 1) continue;
+
+			if (goal == 1)
+			{
+				if (goal_b == 1)
+					continue;
+
+				else
+				{
+					while (!q.empty()) q.pop();
+					return step+1;
+				}
+			}
+
+			//ê²½ìš° 1 - ìœ—ë°©í–¥ + ì¼ì§ì„  ìƒì— ìˆëŠ”ê²½ìš°
+			if (i == 0 && (nx == nbx && ny == nby))
+			{
+				if (Y < BY) nby++; //ë¹¨ê°„ ê³µì´ íŒŒë€ ê³µ ìœ„ì˜ ê²½ìš°
+				if (Y > BY) ny++; // ë¹¨ê°„ ê³µì´ íŒŒë€ ê³µ ì•„ë˜ì¸ ê²½ìš°
+			}
+
+			//ê²½ìš° 2 - ì•„ë«ë°©í–¥ + ì¼ì§ì„  ìƒ
+			if (i == 1 && (nx == nbx && ny == nby))
+			{
+				if (Y < BY) ny--;
+				if (Y > BY) nby--;
+			}
+
+			//ê²½ìš° 3 - ì™¼ìª½ ë°©í–¥ + ì¼ì§ì„ 
+			if (i == 2 && (nx == nbx && ny == nby))
+			{
+				if (X < BX) nbx++;
+				if (X > BX) nx++;
+			}
+
+			//ê²½ìš° 4 - ì˜¤ë¥¸ìª½ ë°©í–¥ + ì¼ì§ì„ 
+			if (i == 3 && (nx == nbx && ny == nby))
+			{
+				if (X < BX) nx--;
+				if (X > BX) nbx--;
+			}
+
+			//			if ((nx == X && ny == Y) || (nbx==BX && nby==BY)) continue;
+			if (visit[ny][nx][nby][nbx] == 0)
+			{
+				visit[ny][nx][nby][nbx] = true;
+				q.push({ nx,ny,nbx,nby,step + 1 });
+			}
+		}
+	}
+
+	return -1;
+}
+
+int main()
+{
+	memset(visit, 0, sizeof(visit));
+
+	cin >> N >> M;
+
+	for(int i=0; i<N; i++)
+		for (int j = 0; j < M; j++)
+		{
+			cin >> Array[i][j];
+			if (Array[i][j] == 'R')
+			{
+				rx = j;
+				ry = i;
+			}
+
+			if (Array[i][j] == 'B')
+			{
+				bx = j;
+				by = i;
+			}
+		}
+
+	int ans = BFS();
+	cout << ans;
+
+	return 0;
+}
