@@ -1,289 +1,289 @@
-//#include <iostream>
-//using namespace std;
-//
-//int N, M;
-//int Array[501][501];
-//int ans;
-//
-//void input()
-//{
-//	cin >> N >> M;
-//	for (int i = 0; i < N; i++)
-//		for (int j = 0; j < M; j++)
-//			cin >> Array[i][j];
-//}
-//
-//int T0(int x, int y, int r)
-//{
-//	if (r > 1) return 0; //1¹ø Å×Æ®³ë¹Ì·Î´Â È¸ÀüÀÌ 1¹ø»Ó
-//	
-//	int sum = 0;
-//	if (r == 0) //°¡·Î
-//	{
-//		for (int i = 0; i < 4; i++)
-//		{
-//			if (x + i >= M) return 0; //¹üÀ§ ¹ş¾î³²
-//			else sum += Array[y][x + i];
-//		}
-//	}
-//	else //¼¼·Î
-//	{
-//		for (int i = 0; i < 4; i++)
-//		{
-//			if (y + i >= N) return 0; //¹üÀ§ ¹ş¾î³²
-//			else sum += Array[y + i][x];
-//		}
-//	}
-//	
-//	return sum;
-//}
-//
-//int T1(int x, int y, int r)
-//{
-//	if (r > 0) //È¸Àü ¾ø´Â µµÇü
-//		return 0;
-//
-//	int sum = 0;
-//	for (int i = 0; i < 2; i++)
-//		for (int j = 0; j < 2; j++)
-//		{
-//			if (y + i >= N || x + j >= M) return 0;
-//			else sum += Array[y + i][x + j];
-//		}
-//
-//	return sum;
-//}
-//
-//int T2(int x, int y, int r)
-//{
-//	int sum = 0;
-//	switch (r)
-//	{
-//	case 0:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (i + y < N) sum += Array[y + i][x];
-//			else return 0;
-//		}
-//
-//		if (y + 2 < N && x + 1 < M) sum += Array[y + 2][x + 1];
-//		else return 0;
-//		break;
-//	case 1:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (i + x < M) sum += Array[y][x + i];
-//			else return 0;
-//		}
-//
-//		if (x + 2 < M && y - 1 > -1) sum += Array[y - 1][x + 2];
-//		else return 0;
-//		break;
-//	case 2:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (y - i > -1) sum += Array[y - i][x];
-//			else return 0;
-//		}
-//
-//		if (y - 2 > -1 && x - 1 > -1) sum += Array[y - 2][x - 1];
-//		else return 0;
-//		break;
-//	case 3:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (x - i > -1) sum += Array[y][x - i];
-//			else return 0;
-//		}
-//
-//		if (x - 2 > -1 && y + 1 < N) sum += Array[y + 1][x - 2];
-//		else return 0;
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	return sum;
-//}
-//
-//int T3(int x, int y, int r)
-//{
-//	if (r > 1) return 0;
-//
-//	int sum = 0;
-//	if (r == 0)
-//	{
-//		if (y + 1 >= N || x + 1 >= M || y + 2 >= N) return 0;
-//		else sum = Array[y][x] + Array[y + 1][x] + Array[y + 1][x + 1] + Array[y + 2][x + 1];
-//	}
-//	else
-//	{
-//		if (x + 1 >= M || y - 1 < 0 || x + 2 >= M) return 0;
-//		else sum = Array[y][x] + Array[y][x + 1] + Array[y - 1][x + 1] + Array[y - 1][x + 2];
-//	}
-//
-//	return sum;
-//}
-//
-//int T4(int x, int y, int r)
-//{
-//	int sum = 0;
-//	switch (r)
-//	{
-//	case 0:
-//		if (x - 1 < 0 || x + 1 >= M || y + 1 >= N) return 0;
-//		sum = Array[y][x] + Array[y][x - 1] + Array[y][x + 1] + Array[y + 1][x];
-//		break;
-//	case 1:
-//		if (y - 1 < 0 || y + 1 >= N || x + 1 >= M) return 0;
-//		sum = Array[y][x] + Array[y - 1][x] + Array[y + 1][x] + Array[y][x + 1];
-//		break;
-//	case 2:
-//		if (x - 1 < 0 || x + 1 >= M || y - 1 < 0) return 0;
-//		sum = Array[y][x] + Array[y][x - 1] + Array[y][x + 1] + Array[y - 1][x];
-//		break;
-//	case 3:
-//		if (y - 1 < 0 || y + 1 >= N || x - 1 < 0) return 0;
-//		sum = Array[y][x] + Array[y - 1][x] + Array[y + 1][x] + Array[y][x - 1];
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	return sum;
-//}
-//
-//int T6(int x, int y, int r)
-//{
-//	if (r > 1) return 0;
-//
-//	int sum = 0;
-//	if (r == 0)
-//	{
-//		if (y + 1 >= N || x - 1 < 0 || y + 2 >= N) return 0;
-//		else sum = Array[y][x] + Array[y + 1][x] + Array[y + 1][x - 1] + Array[y + 2][x - 1];
-//	}
-//	else
-//	{
-//		if (x - 1 < 0 || y - 1 < 0 || x - 2 < 0) return 0;
-//		else sum = Array[y][x] + Array[y][x - 1] + Array[y - 1][x - 1] + Array[y - 1][x - 2];
-//	}
-//
-//	return sum;
-//}
-//
-//int T5(int x, int y, int r)
-//{
-//	int sum = 0;
-//	switch (r)
-//	{
-//	case 0:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (i + y < N) sum += Array[y + i][x];
-//			else return 0;
-//		}
-//
-//		if (y + 2 < N && x - 1 > -1) sum += Array[y + 2][x - 1];
-//		else return 0;
-//		break;
-//	case 1:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (i + x < M) sum += Array[y][x + i];
-//			else return 0;
-//		}
-//
-//		if (x + 2 < M && y + 1 < N) sum += Array[y + 1][x + 2];
-//		else return 0;
-//		break;
-//	case 2:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (y - i > -1) sum += Array[y - i][x];
-//			else return 0;
-//		}
-//
-//		if (y - 2 > -1 && x + 1 < M) sum += Array[y - 2][x + 1];
-//		else return 0;
-//		break;
-//	case 3:
-//		for (int i = 0; i < 3; i++)
-//		{
-//			if (x - i > -1) sum += Array[y][x - i];
-//			else return 0;
-//		}
-//
-//		if (x - 2 > -1 && y - 1 > -1) sum += Array[y - 1][x - 2];
-//		else return 0;
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	return sum;
-//}
-//
-//int Tetno(int x, int y, int num, int r)
-//{
-//	int res = 0;
-//	switch (num)
-//	{
-//	case 0:
-//		res = T0(x, y, r);
-//		break;
-//	case 1:
-//		res = T1(x, y, r);
-//		break;
-//	case 2:
-//		res = T2(x, y, r);
-//		break;
-//	case 3:
-//		res = T3(x, y, r);
-//		break;
-//	case 4:
-//		res = T4(x, y, r);
-//		break;
-//	case 5: // 2¿Í ´ëÄª
-//		res = T5(x, y, r);
-//		break;
-//	case 6: //3°ú ´ëÄª
-//		res = T6(x, y, r);
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	return res;
-//}
-//
-//void solve()
-//{
-//	//±âÁ¸ 5°³ + ´ëÄªµÇ´Â 2°³(³ª¸ÓÁö´Â È¸ÀüÀ¸·Î °¡´É) ÇØ¼­ 8°³ÀÇ Å×Æ®³ë¹Ì·Î ¸¸µé±â -> È¸Àü ÇÔ¼ö ¸¸µé¾î¼­ °¢ ÁöÁ¡ Å½»öÇÏ¸ç ÃÖ´ñ°ª °»½Å
-//	for (int i = 0; i < N; i++)
-//	{
-//		for (int j = 0; j < M; j++)
-//		{
-//			for (int k = 0; k < 7; k++) //Å×Æ®³ë¹Ì·Î Á¾·ù
-//			{
-//				for (int r = 0; r < 4; r++) //È¸Àü
-//				{
-//					int res = Tetno(j, i, k, r);
-//					if (ans < res) ans = res;
-//				}
-//			}
-//		}
-//	}
-//
-//	cout << ans << "\n";
-//}
-//
-//int main()
-//{
-//	std::ios::sync_with_stdio(false);
-//	cin.tie(NULL);
-//
-//	input();
-//	solve();
-//	return 0;
-//}
+#include <iostream>
+using namespace std;
+
+int N, M;
+int Array[501][501];
+int ans;
+
+void input()
+{
+	cin >> N >> M;
+	for (int i = 0; i < N; i++)
+		for (int j = 0; j < M; j++)
+			cin >> Array[i][j];
+}
+
+int T0(int x, int y, int r)
+{
+	if (r > 1) return 0; //1ë²ˆ í…ŒíŠ¸ë…¸ë¯¸ë¡œëŠ” íšŒì „ì´ 1ë²ˆë¿
+	
+	int sum = 0;
+	if (r == 0) //ê°€ë¡œ
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (x + i >= M) return 0; //ë²”ìœ„ ë²—ì–´ë‚¨
+			else sum += Array[y][x + i];
+		}
+	}
+	else //ì„¸ë¡œ
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (y + i >= N) return 0; //ë²”ìœ„ ë²—ì–´ë‚¨
+			else sum += Array[y + i][x];
+		}
+	}
+	
+	return sum;
+}
+
+int T1(int x, int y, int r)
+{
+	if (r > 0) //íšŒì „ ì—†ëŠ” ë„í˜•
+		return 0;
+
+	int sum = 0;
+	for (int i = 0; i < 2; i++)
+		for (int j = 0; j < 2; j++)
+		{
+			if (y + i >= N || x + j >= M) return 0;
+			else sum += Array[y + i][x + j];
+		}
+
+	return sum;
+}
+
+int T2(int x, int y, int r)
+{
+	int sum = 0;
+	switch (r)
+	{
+	case 0:
+		for (int i = 0; i < 3; i++)
+		{
+			if (i + y < N) sum += Array[y + i][x];
+			else return 0;
+		}
+
+		if (y + 2 < N && x + 1 < M) sum += Array[y + 2][x + 1];
+		else return 0;
+		break;
+	case 1:
+		for (int i = 0; i < 3; i++)
+		{
+			if (i + x < M) sum += Array[y][x + i];
+			else return 0;
+		}
+
+		if (x + 2 < M && y - 1 > -1) sum += Array[y - 1][x + 2];
+		else return 0;
+		break;
+	case 2:
+		for (int i = 0; i < 3; i++)
+		{
+			if (y - i > -1) sum += Array[y - i][x];
+			else return 0;
+		}
+
+		if (y - 2 > -1 && x - 1 > -1) sum += Array[y - 2][x - 1];
+		else return 0;
+		break;
+	case 3:
+		for (int i = 0; i < 3; i++)
+		{
+			if (x - i > -1) sum += Array[y][x - i];
+			else return 0;
+		}
+
+		if (x - 2 > -1 && y + 1 < N) sum += Array[y + 1][x - 2];
+		else return 0;
+		break;
+	default:
+		break;
+	}
+
+	return sum;
+}
+
+int T3(int x, int y, int r)
+{
+	if (r > 1) return 0;
+
+	int sum = 0;
+	if (r == 0)
+	{
+		if (y + 1 >= N || x + 1 >= M || y + 2 >= N) return 0;
+		else sum = Array[y][x] + Array[y + 1][x] + Array[y + 1][x + 1] + Array[y + 2][x + 1];
+	}
+	else
+	{
+		if (x + 1 >= M || y - 1 < 0 || x + 2 >= M) return 0;
+		else sum = Array[y][x] + Array[y][x + 1] + Array[y - 1][x + 1] + Array[y - 1][x + 2];
+	}
+
+	return sum;
+}
+
+int T4(int x, int y, int r)
+{
+	int sum = 0;
+	switch (r)
+	{
+	case 0:
+		if (x - 1 < 0 || x + 1 >= M || y + 1 >= N) return 0;
+		sum = Array[y][x] + Array[y][x - 1] + Array[y][x + 1] + Array[y + 1][x];
+		break;
+	case 1:
+		if (y - 1 < 0 || y + 1 >= N || x + 1 >= M) return 0;
+		sum = Array[y][x] + Array[y - 1][x] + Array[y + 1][x] + Array[y][x + 1];
+		break;
+	case 2:
+		if (x - 1 < 0 || x + 1 >= M || y - 1 < 0) return 0;
+		sum = Array[y][x] + Array[y][x - 1] + Array[y][x + 1] + Array[y - 1][x];
+		break;
+	case 3:
+		if (y - 1 < 0 || y + 1 >= N || x - 1 < 0) return 0;
+		sum = Array[y][x] + Array[y - 1][x] + Array[y + 1][x] + Array[y][x - 1];
+		break;
+	default:
+		break;
+	}
+
+	return sum;
+}
+
+int T6(int x, int y, int r)
+{
+	if (r > 1) return 0;
+
+	int sum = 0;
+	if (r == 0)
+	{
+		if (y + 1 >= N || x - 1 < 0 || y + 2 >= N) return 0;
+		else sum = Array[y][x] + Array[y + 1][x] + Array[y + 1][x - 1] + Array[y + 2][x - 1];
+	}
+	else
+	{
+		if (x - 1 < 0 || y - 1 < 0 || x - 2 < 0) return 0;
+		else sum = Array[y][x] + Array[y][x - 1] + Array[y - 1][x - 1] + Array[y - 1][x - 2];
+	}
+
+	return sum;
+}
+
+int T5(int x, int y, int r)
+{
+	int sum = 0;
+	switch (r)
+	{
+	case 0:
+		for (int i = 0; i < 3; i++)
+		{
+			if (i + y < N) sum += Array[y + i][x];
+			else return 0;
+		}
+
+		if (y + 2 < N && x - 1 > -1) sum += Array[y + 2][x - 1];
+		else return 0;
+		break;
+	case 1:
+		for (int i = 0; i < 3; i++)
+		{
+			if (i + x < M) sum += Array[y][x + i];
+			else return 0;
+		}
+
+		if (x + 2 < M && y + 1 < N) sum += Array[y + 1][x + 2];
+		else return 0;
+		break;
+	case 2:
+		for (int i = 0; i < 3; i++)
+		{
+			if (y - i > -1) sum += Array[y - i][x];
+			else return 0;
+		}
+
+		if (y - 2 > -1 && x + 1 < M) sum += Array[y - 2][x + 1];
+		else return 0;
+		break;
+	case 3:
+		for (int i = 0; i < 3; i++)
+		{
+			if (x - i > -1) sum += Array[y][x - i];
+			else return 0;
+		}
+
+		if (x - 2 > -1 && y - 1 > -1) sum += Array[y - 1][x - 2];
+		else return 0;
+		break;
+	default:
+		break;
+	}
+
+	return sum;
+}
+
+int Tetno(int x, int y, int num, int r)
+{
+	int res = 0;
+	switch (num)
+	{
+	case 0:
+		res = T0(x, y, r);
+		break;
+	case 1:
+		res = T1(x, y, r);
+		break;
+	case 2:
+		res = T2(x, y, r);
+		break;
+	case 3:
+		res = T3(x, y, r);
+		break;
+	case 4:
+		res = T4(x, y, r);
+		break;
+	case 5: // 2ì™€ ëŒ€ì¹­
+		res = T5(x, y, r);
+		break;
+	case 6: //3ê³¼ ëŒ€ì¹­
+		res = T6(x, y, r);
+		break;
+	default:
+		break;
+	}
+
+	return res;
+}
+
+void solve()
+{
+	//ê¸°ì¡´ 5ê°œ + ëŒ€ì¹­ë˜ëŠ” 2ê°œ(ë‚˜ë¨¸ì§€ëŠ” íšŒì „ìœ¼ë¡œ ê°€ëŠ¥) í•´ì„œ 8ê°œì˜ í…ŒíŠ¸ë…¸ë¯¸ë¡œ ë§Œë“¤ê¸° -> íšŒì „ í•¨ìˆ˜ ë§Œë“¤ì–´ì„œ ê° ì§€ì  íƒìƒ‰í•˜ë©° ìµœëŒ“ê°’ ê°±ì‹ 
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			for (int k = 0; k < 7; k++) //í…ŒíŠ¸ë…¸ë¯¸ë¡œ ì¢…ë¥˜
+			{
+				for (int r = 0; r < 4; r++) //íšŒì „
+				{
+					int res = Tetno(j, i, k, r);
+					if (ans < res) ans = res;
+				}
+			}
+		}
+	}
+
+	cout << ans << "\n";
+}
+
+int main()
+{
+	std::ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	input();
+	solve();
+	return 0;
+}
