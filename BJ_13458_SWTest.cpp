@@ -1,68 +1,65 @@
-//#include <iostream>
-//using namespace std;
-//
-//#define endl "\n"
-//
-////N ÃÖ´ë°ªÀÌ 100¸¸ÀÌ¹Ç·Î N^2À¸·Î´Â Àı´ë Åë°ú¸øÇÔ
-////ÃÖ¾ÇÀÇ °æ¿ì : ÃÑ°¨µ¶, ºÎ°¨µ¶µéÀÌ 1¸í¸¸ °¨½Ã °¡´ÉÇÒ¶§ °¢ ½ÃÇèÀå¸¶´Ù ÀÎ¿øÀÌ ÃÖ´ë·Î Â÷ÀÖÀ¸¸é ÇÊ¿äÇÑ °¨µ¶¼ö´Â (1 + 99¸¸) * N°³ => 100¸¸^2
-////long int = int !! long long int·Î ÇØ¾ßÇÔ, long long int => int * 4¹è,  90¾ï´ë
-//
-//int N, B, C;
-//int Array[1000001];
-//long long int ans = 0;
-//
-//void input()
-//{
-//	cin >> N;
-//	for (int i = 1; i < N + 1; i++)
-//		cin >> Array[i];
-//
-//	cin >> B >> C;
-//}
-//
-////ºÎ°¨µ¶ ¼ö ±¸ÇÏ±â
-//int calcul(int x)
-//{
-//	int res = Array[x] / C;
-//
-//	if ((res * C) == Array[x]) return res;
-//	else return res + 1;
-//}
-//
-//void solve()
-//{
-//	//°¢ ½ÃÇèÀå¸¶´Ù ÃÑ½ÃÇè°¨µ¶°ü 1¸í ÇÊ¼ö¹èÄ¡.
-//
-//	for (int i = 1; i < N + 1; i++)
-//	{
-//		int cnt = 0;
-//		
-//		//ÃÑ½ÃÇè°¨µ¶°ü ¹èÄ¡
-//		Array[i] -= B;
-//		ans++;
-//
-//		//ÃÑ½ÃÇè°¨µ¶°üÀ¸·Îµµ ÃæºĞÇÏ¸é ´ÙÀ½ ½ÃÇèÀå
-//		if (Array[i] <= 0)
-//			continue;
-//
-//		//³²Àº ÀÎ¿ø¸¸Å­ ºÎ°¨µ¶ ¸í¼ö Ã¤¿ì±â
-//		cnt = calcul(i);
-//
-//		ans += cnt;
-//	}
-//
-//	cout << ans << endl;
-//}
-//
-//int main()
-//{
-//	std::ios::sync_with_stdio(false);
-//	cin.tie(NULL);
-//	cout.tie(NULL);
-//
-//	input();
-//
-//	solve();
-//
-//	return 0;
-//}
+#include <iostream>
+using namespace std;
+
+#define endl "\n"
+
+//N ìµœëŒ€ê°’ì´ 100ë§Œì´ë¯€ë¡œ N^2ìœ¼ë¡œëŠ” ì ˆëŒ€ í†µê³¼ëª»í•¨
+//ìµœì•…ì˜ ê²½ìš° : ì´ê°ë…, ë¶€ê°ë…ë“¤ì´ 1ëª…ë§Œ ê°ì‹œ ê°€ëŠ¥í• ë•Œ ê° ì‹œí—˜ì¥ë§ˆë‹¤ ì¸ì›ì´ ìµœëŒ€ë¡œ ì°¨ìˆìœ¼ë©´ í•„ìš”í•œ ê°ë…ìˆ˜ëŠ” (1 + 99ë§Œ) * Nê°œ => 100ë§Œ^2
+//long int = int !! long long intë¡œ í•´ì•¼í•¨, long long int => int * 4ë°°,  90ì–µëŒ€
+
+int N, B, C;
+int Array[1000001];
+long long int ans = 0;
+
+void input()
+{
+	cin >> N;
+	for (int i = 1; i < N + 1; i++)
+		cin >> Array[i];
+
+	cin >> B >> C;
+}
+
+//ë¶€ê°ë… ìˆ˜ êµ¬í•˜ê¸°
+int calcul(int x)
+{
+	int res = Array[x] / C;
+
+	if ((res * C) == Array[x]) return res;
+	else return res + 1;
+}
+
+void solve()
+{
+	//ê° ì‹œí—˜ì¥ë§ˆë‹¤ ì´ì‹œí—˜ê°ë…ê´€ 1ëª… í•„ìˆ˜ë°°ì¹˜.
+
+	for (int i = 1; i < N + 1; i++)
+	{
+		int cnt = 0;
+		
+		//ì´ì‹œí—˜ê°ë…ê´€ ë°°ì¹˜
+		Array[i] -= B;
+		ans++;
+
+		//ì´ì‹œí—˜ê°ë…ê´€ìœ¼ë¡œë„ ì¶©ë¶„í•˜ë©´ ë‹¤ìŒ ì‹œí—˜ì¥
+		if (Array[i] <= 0)
+			continue;
+
+		//ë‚¨ì€ ì¸ì›ë§Œí¼ ë¶€ê°ë… ëª…ìˆ˜ ì±„ìš°ê¸°
+		cnt = calcul(i);
+
+		ans += cnt;
+	}
+
+	cout << ans << endl;
+}
+
+int main()
+{
+	std::ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	input();
+	solve();
+	return 0;
+}
