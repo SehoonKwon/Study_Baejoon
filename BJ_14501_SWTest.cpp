@@ -1,87 +1,59 @@
-//#include <iostream>
-//#include <vector>
-//#include <algorithm>
-//using namespace std;
-//
-//#define endl "\n"
-//
-//// ½¬¿î ¹éÆ®·¡Å· ¹®Á¦¿´À½ 40ºĞ ÄÆ
-//
-//int N;
-//int visit[16];
-//int MAX = 0;
-//
-//struct point
-//{
-//	int T;
-//	int P;
-//};
-//
-//vector<point> v;
-//
-//void input()
-//{
-//	cin >> N;
-//
-//	v.push_back({ 0, 0 }); //ÀÎµ¦½º ¸ÂÃß±â¿ë ´õ¹Ì
-//	for (int i = 0; i < N; i++)
-//	{
-//		int t, p;
-//		cin >> t >> p;
-//		v.push_back({ t, p });
-//	}
-//}
-//
-//int calcul()
-//{
-//	int sum = 0;
-//	for (int i = 1; i < N + 1; i++)
-//	{
-//		if (visit[i] == 1)
-//		{
-//			sum += v[i].P;
-//		}
-//	}
-//
-//	return sum;
-//}
-//
-//void DFS(int idx)
-//{
-//	if (idx > N)
-//	{
-//		int ans = calcul();
-//
-//		MAX = max(ans, MAX);
-//		return;
-//	}
-//
-//	visit[idx] = true;
-//	int k = v[idx].T;
-//	if (idx + k <= N + 1) DFS(idx + k);
-//
-//	//Æ÷ÇÔ ¾ÈÇÏ´Â °æ¿ì ±×³É ÀÎµ¦½º ÇÏ³ª À§·Î ÇØ¼­ ³Ñ±â±â. ÀÌ·¸°Ô ÇØ¾ß ¸¶Áö¸· ³¯ Ã¼Å© ¾ÈÇÏ°í ³Ñ±æ ¼ö ÀÖÀ½
-//	visit[idx] = false;
-//	DFS(idx + 1);
-//
-//}
-//
-//void solve()
-//{
-//	DFS(1);
-//
-//	cout << MAX << endl;
-//}
-//
-//int main()
-//{
-//	std::ios::sync_with_stdio(false);
-//	cin.tie(NULL);
-//	cout.tie(NULL);
-//
-//	input();
-//
-//	solve();
-//
-//	return 0;
-//}
+#include <iostream>
+#include <vector>
+using namespace std;
+
+//20.05.30
+
+int N;
+int ans;
+int visit[16];
+
+struct point
+{
+	int T;
+	int val;
+};
+
+vector<point> v;
+
+void input()
+{
+	cin >> N;
+
+	v.push_back({ 0, 0 }); //dummy;
+	for (int i = 0; i < N; i++)
+	{
+		int T, val;
+		cin >> T >> val;
+		v.push_back({ T, val });
+	}
+}
+
+void DFS(int day, int cost)
+{
+	if (day > N + 1) return; //ë§ˆì§€ë§‰ë‚ ì—ë„ í•˜ë£¨ì§œë¦¬ ì¼ ê°€ëŠ¥.
+	
+	if (ans < cost) ans = cost;
+
+	for (int i = day; i < N + 1; i++)
+	{
+		if (visit[i] == true) continue;
+		visit[i] = true;
+		DFS(i + v[i].T, cost + v[i].val);
+		visit[i] = false;
+	}
+}
+
+void solve()
+{
+	DFS(1, 0);
+
+	cout << ans;
+}
+
+int main()
+{
+	input();
+	solve();
+	return 0;
+}
