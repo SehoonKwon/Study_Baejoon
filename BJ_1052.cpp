@@ -2,6 +2,7 @@
 using namespace std;
 
 //구현 문제가 아니라 사실 수학 문제임. 구현으로 풀면 시간초과
+//description 해설 참조
 
 int N, K;
 
