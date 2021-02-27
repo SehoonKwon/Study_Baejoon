@@ -3,6 +3,8 @@
 #include <vector>
 using namespace std;
 
+// 이렇게 기본으로 풀면 736ms, PQ로 풀면 696ms => 
+
 int N, M;
 vector<int> v;
 
