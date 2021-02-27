@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-// 이렇게 기본으로 풀면 736ms, PQ로 풀면 696ms => 
+// 이렇게 기본으로 풀면 736ms, PQ로 풀면 696ms => 차이없다.
 
 int N, M;
 vector<int> v;
