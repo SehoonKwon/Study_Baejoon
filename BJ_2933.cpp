@@ -135,7 +135,7 @@ void solve()
 							if (Array[ny][nx] == 'x' && visit[ny][nx] == false)
 							{
 								BFS(nx, ny, j + 1);
-								pull(j + 1); //2개 이상의 클러스터가 내려오는 경우는 없다 했으니 바로바로 내려줘도 될듯? 있으면 더이상 없으므로 빠져나가기
+								pull(j + 1); // 2개 이상의 클러스터가 내려오는 경우는 없다 했으니 바로바로 내려줘도 될듯? 있으면 더이상 없으므로 빠져나가기
 								pv.clear();
 								if (flag)
 									break;
