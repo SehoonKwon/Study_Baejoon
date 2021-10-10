@@ -1,50 +1,36 @@
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <string>
 using namespace std;
 
 int N, M;
-map<string, int> mymap;
-string str[100001];
+unordered_map<string, int> mymap1;
+unordered_map<int, string> mymap2;
 
-void input()
-{
-	cin >> N >> M;
-	string s;
-	for (int i = 1; i < N + 1; i++)
-	{
-		cin >> s;
-		str[i] = s;
-		mymap[s] = i;
-	}
-}
 
-void solve()
-{
-	string s;
-	for (int i = 0; i < M; i++)
-	{
-		cin >> s;
-		if (s[0] >= '0' && s[0] <= '9')
-		{
-			int x = stoi(s);
-			cout << str[x] << "\n";
-		}
-		else
-		{
-			int x = mymap[s];
-			cout << x << "\n";
-		}
-	
-	}
-}
-
-int main()
-{
+int main() {
+	// your code goes here
 	std::ios::sync_with_stdio(false);
 	cin.tie(NULL);
-
-	input();
-	solve();
+	
+	cin >> N >> M;
+	for(int i =1; i<N+1; i++)
+	{
+		string str;
+		cin >> str;
+		mymap1[str] = i;
+		mymap2[i] = str;
+	}
+	
+	while(M--)
+	{
+		string str;
+		cin >> str;
+		if(str[0] >= 'A' && str[0] <= 'Z')
+			cout<<mymap1[str]<<"\n";
+		else
+			cout<<mymap2[stoi(str)]<<"\n";
+	}
+	
 	return 0;
 }
