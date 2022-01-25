@@ -1,84 +1,72 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <queue>
+#include<iostream>
+#include<vector>
+#include<queue>
 using namespace std;
 
-//21.03.09 다익 연습
-
-#define endl "\n"
-#define INF (int)1e9
+//게시판 틀린곳 찾아주기 아마 컴패어인듯
 
 int V, E, K;
+int u, v, w;
+typedef struct _info {
+	int end;
+	int weight;
+}info;
+typedef struct _heap {
+	int weight;
+	int vertex;
+}heap;
+struct compare {
+	bool operator()(heap& first, heap& second) {
+		return first.weight > second.weight;
+	}
+};
+vector<info> graph[20001];
 int dist[20001];
-
-struct point
-{
-	int dest;
-	int val;
-};
-
-vector<point> v[20001];
-
-void input()
-{
-	cin >> V >> E >> K;
-	for (int i = 0; i < E; i++)
-	{
-		int s, e, w;
-		cin >> s >> e >> w;
-		v[s].push_back({ e, w });
+void Dijkstra(void) {
+	priority_queue<heap, vector<heap>, compare> minheap;
+	minheap.push({ 0, K });
+	while (!minheap.empty()) {
+		int now_cost = minheap.top().weight;
+		int now_vertex = minheap.top().vertex;
+		minheap.pop();
+		if (dist[now_vertex] < now_cost) {
+			continue;
+		}
+		for (int i = 0; i < graph[now_vertex].size(); i++) {
+			int next_cost = graph[now_vertex][i].weight;
+			int next_vertex = graph[now_vertex][i].end;
+			if (dist[next_vertex] > now_cost + next_cost) {
+				dist[next_vertex] = now_cost + next_cost;
+				minheap.push({ dist[next_vertex], next_vertex });
+			}
+		}
 	}
 }
-
-struct cmp
-{
-	bool operator()(const point& u, const point& v)
-	{
-		if (u.val > v.val) return true;
-		else return false;
+int main(void) {
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	cin >> V >> E;
+	cin >> K;
+	for (int i = 0; i < E; i++) {
+		cin >> u >> v >> w;
+		graph[u].push_back({ v, w });
 	}
-};
-
-void Dijkstra()
-{
-	priority_queue<point, vector<point>, cmp> pq;
-	for (auto it : v[K])
-		pq.push({ it.dest, it.val });
-
-	while (!pq.empty())
-	{
-		int Node = pq.top().dest;
-		int val = pq.top().val;
-		pq.pop();
-
-		if (dist[Node] != INF) continue;
-		dist[Node] = val;
-		for (auto it : v[Node])
-			pq.push({ it.dest, it.val + val });
+	for (int i = 1; i <= V; i++) {
+		if (i == K) {
+			dist[i] = 0;
+		}
+		else {
+			dist[i] = 1e9;
+		}
 	}
-}
-
-void solve()
-{
-	for (int i = 1; i < V + 1; i++)
-		dist[i] = INF;
-	dist[K] = 0;
 	Dijkstra();
-	for (int i = 1; i < V + 1; i++)
-	{
-		if (dist[i] == INF) cout << "INF";
-		else cout << dist[i];
-		cout << endl;
+	for (int i = 1; i <= V; i++) {
+		if (dist[i] == 1e9) {
+			cout << "INF\n";
+		}
+		else {
+			cout << dist[i] << "\n";
+		}
 	}
-}
-
-int main()
-{
-	std::ios::sync_with_stdio(false);
-	cin.tie(NULL);
-
-	input();
-	solve();
 	return 0;
 }
