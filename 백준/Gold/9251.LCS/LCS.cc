@@ -33,6 +33,6 @@ int main()
 	cin.tie(NULL);
 
 	cin >> s1 >> s2;
-	solve();
+	solve(); 
 	return 0;
 }
