@@ -6,3 +6,4 @@ int main(){
     cout<<n<<endl<<1;
     return 0;
 }
+//git commit test
